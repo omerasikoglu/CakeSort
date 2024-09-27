@@ -52,8 +52,10 @@ namespace CakeSort.World{
         CreateGridCell(gridCellInfo);
       }
 
-      remainingMoveCount = MAX_MOVE_COUNT_FOR_WIN; // init
-      OnUpdateRemainingMoveCount?.Invoke(remainingMoveCount);   // init
+      // init
+      remainingMoveCount = MAX_MOVE_COUNT_FOR_WIN;
+      OnPlateAddedToGrid?.Invoke(remainingMoveCount);
+      OnGridCreated?.Invoke(); 
     }
 
     void CreateGridCell(GridCellData gridCellData){
@@ -71,7 +73,7 @@ namespace CakeSort.World{
     public void UpdateGrid(GridCellData currentCellData){
       this.currentCellData = currentCellData;
 
-      OnUpdateRemainingMoveCount?.Invoke(--remainingMoveCount);
+      OnPlateAddedToGrid?.Invoke(--remainingMoveCount);
       
       UpdateMainGrid(this.currentCellData);
 
@@ -229,8 +231,9 @@ namespace CakeSort.World{
       Reset, Failed, Succeed
     }
 
-    public event Action<LevelStatus> OnLevelEnded;  // Fail, Success, Reset
-    public event Action<int>         OnUpdateRemainingMoveCount; // remaining move count
+    public event Action              OnGridCreated;
+    public event Action<LevelStatus> OnLevelEnded;               // Fail, Success, Reset
+    public event Action<int>         OnPlateAddedToGrid; // remaining move count
 
     void CheckIsGridFull(){
 
@@ -252,7 +255,14 @@ namespace CakeSort.World{
     public void ResetGrid(){
       remainingMoveCount = MAX_MOVE_COUNT_FOR_WIN;
       OnLevelEnded?.Invoke(LevelStatus.Reset);
-      OnUpdateRemainingMoveCount?.Invoke(remainingMoveCount);
+      OnPlateAddedToGrid?.Invoke(remainingMoveCount);
+      OnGridCreated?.Invoke();
+
+      foreach (var cellData in mainGrid){
+        if(cellData.OccupyingPlate is null) continue;
+        cellData.GridCell.RemovePlateFromCell(cellData.OccupyingPlate);
+        UpdateMainGrid(cellData);
+      }
     }
   #endregion
 

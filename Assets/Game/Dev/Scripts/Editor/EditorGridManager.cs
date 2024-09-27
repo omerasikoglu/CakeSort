@@ -28,19 +28,6 @@ namespace CakeSort.Editor{
     }
   }
 
-  [CustomEditor(typeof(Counter))]
-  public class TestCounter : UnityEditor.Editor{
-    public override void OnInspectorGUI(){
-      Counter counter = (Counter)target;
-
-      DrawDefaultInspector();
-
-      if (GUILayout.Button("Test Create 3 Plate")){
-        counter.CreatePlate();
-      }
-    }
-  }
-
 #endif
 
 }

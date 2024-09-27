@@ -23,15 +23,15 @@ namespace CakeSort.UI{
     }
 
     void OnEnable(){
-      gridManager.OnUpdateRemainingMoveCount += OnUpdateRemainingMoveCount;
+      gridManager.OnPlateAddedToGrid += PlateAddedToGrid;
       gridManager.OnLevelEnded += OnLevelEnded;
     } 
     void OnDisable(){
-      gridManager.OnUpdateRemainingMoveCount -= OnUpdateRemainingMoveCount;
+      gridManager.OnPlateAddedToGrid -= PlateAddedToGrid;
       gridManager.OnLevelEnded -= OnLevelEnded;
     }
 
-    void OnUpdateRemainingMoveCount(int remainingMoveCount){
+    void PlateAddedToGrid(int remainingMoveCount){
       this.remainingMoveCount.SetText(remainingMoveCount.ToString());
     }
 
