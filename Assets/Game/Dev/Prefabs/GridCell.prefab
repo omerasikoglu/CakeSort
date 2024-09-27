@@ -150,3 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f24729a9766f477ea82dcbd041236760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridCellData:
+    Axis:
+      x: 0
+      z: 0
+    WorldPosition: {x: 0, y: 0, z: 0}
+    GridManager: {fileID: 0}
+    GridCell: {fileID: 0}
+    OccupyingPlate: {fileID: 0}

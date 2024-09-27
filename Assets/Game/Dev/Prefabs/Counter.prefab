@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7394684319492943103}
   - component: {fileID: 4906710062383092835}
-  - component: {fileID: 2352162371494273064}
   m_Layer: 0
   m_Name: Counter
   m_TagString: Untagged
@@ -47,32 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a596c824f20947dd91a6c9f3fe4c1f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platePlaceArray:
-  - {fileID: 8891530368082730181}
-  - {fileID: 3367321904322415880}
-  - {fileID: 3178751085750851075}
+  plateRootTransformArray: []
   plateSettings: {fileID: 11400000, guid: 1dc1c37f2cf1d9f47a927b3d79b5292d, type: 2}
---- !u!65 &2352162371494273064
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2380506729020837737}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 0.1, z: 1}
-  m_Center: {x: 0, y: -0.1, z: 0.27}
 --- !u!1 &3642657343320797869
 GameObject:
   m_ObjectHideFlags: 0
