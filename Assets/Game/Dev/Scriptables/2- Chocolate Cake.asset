@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 2- Chocolate Cake
   m_EditorClassIdentifier: 
   type: 2
-  prefab: {fileID: 8896981215882130929, guid: 04890163c8a367a40ae708a3ac3deddb, type: 3}
+  CakeSlicePrefabArray:
+  - {fileID: 9133070981989002236, guid: 580097f18831eb04984be404071710b0, type: 3}
+  - {fileID: 5818825671675227925, guid: 4904ca756cbc6d74a8045cb99a5c0536, type: 3}
+  - {fileID: 2709139751387886529, guid: 4f3c28a42989d0847bbf0c44372c3790, type: 3}
+  - {fileID: 4049127045015161111, guid: 781ea740c0948c243b5c02f60610d316, type: 3}
+  - {fileID: 5281048414547272194, guid: 95a6c9289ef87114ca6e31430491abf9, type: 3}
+  - {fileID: 8755073730781686160, guid: 013e4fcc8db4f104fb2616b5b17f663c, type: 3}

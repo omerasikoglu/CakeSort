@@ -1,10 +1,10 @@
 namespace CakeSort.Utils{
 
   public struct Keys{
-    
+
     public struct Input{
-      public const string HOLD  = "Hold";
-      public const string RELEASE  = "Release";
+      public const string HOLD    = "Hold";
+      public const string RELEASE = "Release";
 
       public struct ActionMap{
         public const string PLAYER_ACTION_MAP = "PlayerActionMap";
@@ -14,18 +14,20 @@ namespace CakeSort.Utils{
       public const string HORIZONTAL = "Horizontal";
       public const string VERTICAL   = "Vertical";
     }
-    
+
     public struct Editor{
       public const string BASE_DATA  = "Base Data";
       public const string CHILD_DATA = "Child Data";
     }
 
     public struct Layer{
-      public const string CAKE = "Cake";
+      public const string CAKE      = "Cake";
+      public const string DRAGGABLE = "Draggable";
     }
 
     public struct Tag{
-      public const string CAKE = "Cake";
+      public const string CAKE      = "Cake";
+      public const string DRAGGABLE = "Draggable";
     }
 
     public struct Sfx{

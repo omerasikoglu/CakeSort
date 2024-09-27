@@ -9,11 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7448461959158615401}
-  - component: {fileID: 2345688037031558328}
+  - component: {fileID: 6692843222441834139}
   - component: {fileID: 7417994966643353090}
-  m_Layer: 0
+  - component: {fileID: 2345688037031558328}
+  - component: {fileID: 752001132896304004}
+  m_Layer: 8
   m_Name: Plate
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,34 +29,42 @@ Transform:
   m_GameObject: {fileID: 248561779903707348}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.55, z: -0.90000004}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5995755411522998992}
   - {fileID: 2873300201311744229}
+  - {fileID: 4376163450057609461}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2345688037031558328
-MonoBehaviour:
+--- !u!54 &6692843222441834139
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248561779903707348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8068587738b4e16a1bcbae9340eef1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cakeSliceTransformArray:
-  - {fileID: 5973773695674559575}
-  - {fileID: 7309803552691690268}
-  - {fileID: 6921839246669447794}
-  - {fileID: 7759933015666139395}
-  - {fileID: 4090588805526483151}
-  - {fileID: 7086684254925980518}
-  cakeContainer: {fileID: 11400000, guid: 89a437c7f5ec89d4188df07bc3d5f971, type: 2}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!65 &7417994966643353090
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -76,6 +86,43 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.15, y: 0.1, z: 0.15}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2345688037031558328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248561779903707348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8068587738b4e16a1bcbae9340eef1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cakeSliceSettings:
+  - {fileID: 11400000, guid: 183d0ca3aeb2c6f42844eec6871e2b68, type: 2}
+  - {fileID: 11400000, guid: f694a870499a0d346856a525024c1beb, type: 2}
+  - {fileID: 11400000, guid: 8ca23757fe9ad264ba21e9f9b66dbaac, type: 2}
+  - {fileID: 11400000, guid: 37babaf82777ee547a0e26f5e4ece24f, type: 2}
+  sliceSlotTransformArray:
+  - {fileID: 5973773695674559575}
+  - {fileID: 7309803552691690268}
+  - {fileID: 6921839246669447794}
+  - {fileID: 7759933015666139395}
+  - {fileID: 4090588805526483151}
+  - {fileID: 7086684254925980518}
+  cakeSlicesRoot: {fileID: 4376163450057609461}
+--- !u!114 &752001132896304004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248561779903707348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 731bf0d6e7c3df74b9b11ad047279704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &355264142606626720
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,9 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5973773695674559575}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slice_0
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,11 +148,42 @@ Transform:
   m_GameObject: {fileID: 355264142606626720}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2873300201311744229}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &979831261164534296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4376163450057609461}
+  m_Layer: 8
+  m_Name: CakeSlicesRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4376163450057609461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979831261164534296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7448461959158615401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4061201656588028342
 GameObject:
@@ -116,9 +194,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7759933015666139395}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slice_3
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 4061201656588028342}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -147,9 +225,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2873300201311744229}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cake Slice Places
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,9 +262,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7086684254925980518}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slice_5
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 5400434869287244826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.5, z: -0, w: -0.8660254}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -215,9 +293,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4090588805526483151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slice_4
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,7 +309,7 @@ Transform:
   m_GameObject: {fileID: 6170681045546905647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.8660254, z: -0, w: -0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -246,9 +324,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6921839246669447794}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slice_2
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -262,7 +340,7 @@ Transform:
   m_GameObject: {fileID: 6648509115631286323}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.86602545, z: 0, w: 0.49999994}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -277,9 +355,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7309803552691690268}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slice_1
-  m_TagString: Untagged
+  m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,7 +371,7 @@ Transform:
   m_GameObject: {fileID: 8548972672226896265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.5, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,6 +389,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: visual - Plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168592092978277257, guid: 1189eb576bb3d28409ac38a48d00a6b0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168592092978277257, guid: 1189eb576bb3d28409ac38a48d00a6b0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Draggable
       objectReference: {fileID: 0}
     - target: {fileID: 3571346575318137547, guid: 1189eb576bb3d28409ac38a48d00a6b0,
         type: 3}

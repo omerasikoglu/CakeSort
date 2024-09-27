@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4900cced04e1485f97c654a36c3e35d9, type: 3}
   m_Name: Cake Container
   m_EditorClassIdentifier: 
-  cakeArray:
+  cakeSliceArray:
   - {fileID: 11400000, guid: 183d0ca3aeb2c6f42844eec6871e2b68, type: 2}
   - {fileID: 11400000, guid: f694a870499a0d346856a525024c1beb, type: 2}
   - {fileID: 11400000, guid: 8ca23757fe9ad264ba21e9f9b66dbaac, type: 2}

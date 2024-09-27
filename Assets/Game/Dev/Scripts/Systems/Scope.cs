@@ -20,13 +20,8 @@ namespace CakeSort.Systems{
 
       builder.Register<LevelLoader>(Lifetime.Scoped).WithParameter(START_LEVEL_FROM);  // for GameManager
       builder.Register<GridCreator>(Lifetime.Scoped).WithParameter(GRID_WIDTH_LENGTH); // for GameManager, GridManager
-      
-      // builder.RegisterComponentOnNewGameObject<GridManager>(Lifetime.Scoped).UnderTransform(transform); // for GameManager, need GridCreator
+
       builder.RegisterComponentInHierarchy<GridManager>().UnderTransform(transform); // for GameManager, need GridCreator
-
-      builder.RegisterComponentInHierarchy<PlayerInputManager>();
-      builder.RegisterComponentInHierarchy<AudioManager>(); // for Plate
-
     }
   }
 

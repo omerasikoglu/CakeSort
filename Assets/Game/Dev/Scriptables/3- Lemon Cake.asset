@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 3- Lemon Cake
   m_EditorClassIdentifier: 
   type: 3
-  prefab: {fileID: 8896981215882130929, guid: af06db0aa8c345d4ab56e91352ec8d74, type: 3}
+  CakeSlicePrefabArray:
+  - {fileID: 3278071484548206556, guid: b0edb6af34f47544480e11838bfe54d6, type: 3}
+  - {fileID: 2781537874696966857, guid: 92af4f2a077c1c14083d7545838406d8, type: 3}
+  - {fileID: 3411436558115085061, guid: da39721cb855fe547b5c7ecb7979835a, type: 3}
+  - {fileID: 4879677888618475746, guid: b987e85a7ee90344ba59bdf1711e4283, type: 3}
+  - {fileID: 7684706023467740186, guid: f9cd9e5cad998a0498cb04534f486128, type: 3}
+  - {fileID: 511272379992954556, guid: f882e173a26e19f4b862c50aece20edf, type: 3}

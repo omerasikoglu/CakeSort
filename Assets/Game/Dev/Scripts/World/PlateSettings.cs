@@ -6,13 +6,17 @@ namespace CakeSort.World{
   public class PlateSettings :ScriptableObject{
 
     public GameObject prefab;
+    
+    public CakeSliceSettings[] cakeSettings;
 
-    public Plate CreatePlate(){
-      GameObject go = Instantiate(prefab);
+    public Plate Create(Transform parent){
+      GameObject go       = Instantiate(prefab, parent);
       go.SetActive(true);
-      go.name = prefab.name;
+      go.name               = prefab.name;
+      // go.transform.position = parent.position;
 
-      Plate plate = prefab.GetComponent<Plate>();
+      Plate plate = go.GetComponent<Plate>();
+      // Plate plate = go.AddComponent<Plate>();
       plate.Settings = this;
 
       return plate;

@@ -12,13 +12,13 @@ namespace CakeSort.World{
 
     [Inject] readonly GridCreator gridCreator;
     
-    [SerializeField] Collider colliderPrototype;
+    [SerializeField] GridCell gridCellPrefab;
 
-    GridCell[] gridCellArray;
+    GridCellData[] gridCellArray;
     
     Dictionary<Axis, Plate> gridCellPlateDic;
 
-    float xInterval; float yHeight; float zInterval;
+    float xInterval; float yHeight; float zInterval;  // @formatter:on
 
   #region Unity functions
     void OnEnable(){
@@ -28,25 +28,24 @@ namespace CakeSort.World{
     void OnDisable(){
       gridCreator.OnGridCompleted -= OnGridCompleted;
     }
-    
-  #endregion  // @formatter:on
+  #endregion
 
   #region Observer
-    void OnGridCompleted(GridCell[] gridCellArray){
+    void OnGridCompleted(GridCellData[] gridCellArray){
       InitDic(gridCellArray);
 
       this.gridCellArray = gridCellArray;
 
       gridCellArray.ForEach(o => CreateColliders(o.WorldPosition));
 
-      void CreateColliders(Vector3 pos) => Instantiate(colliderPrototype, pos, Quaternion.identity, transform);
+      void CreateColliders(Vector3 pos) => Instantiate(gridCellPrefab, pos, Quaternion.identity, transform);
 
     }
   #endregion
 
-    void InitDic(IEnumerable<GridCell> grid){
+    void InitDic(IEnumerable<GridCellData> grid){
       gridCellPlateDic = new();
-      foreach (GridCell cell in grid){
+      foreach (GridCellData cell in grid){
         gridCellPlateDic[cell.Axis] = null;
       }
     }
@@ -61,7 +60,7 @@ namespace CakeSort.World{
 
   #region Test
     public void TestGridCellCoords(){
-      foreach (GridCell cell in gridCellArray){
+      foreach (GridCellData cell in gridCellArray){
         // Debug.Log($"<color=green>{cell.Axis.x} | {cell.Axis.z}</color>");
         Debug.Log($"<color=green>{cell.WorldPosition}</color>");
       }

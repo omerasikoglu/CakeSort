@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace CakeSort.World{
 
-  [Serializable] public class GridCell{
-    public Axis     Axis;
-    public Vector3  WorldPosition;
-    public bool     IsEmpty  = true;
-    public CakeType cakeType = CakeType.Empty;
-  }
-
   [Serializable] public struct Axis{ // grid cell position
     public int x;
     public int z;
@@ -23,7 +16,7 @@ namespace CakeSort.World{
 
   public class GridCreator : IInitializable{
 
-    public event Action<GridCell[]> OnGridCompleted; // gridCell
+    public event Action<GridCellData[]> OnGridCompleted; // gridCell
 
   #region Data
     const float X_INTERVAL = 0.2f;
@@ -33,7 +26,7 @@ namespace CakeSort.World{
 
     Vector2Int gridWidthLength;
 
-    GridCell[] gridCellArray; // = grid
+    GridCellData[] gridCellArray; // = grid
 
     public GridCreator(Vector2Int gridWidthLength){
       this.gridWidthLength = gridWidthLength;
@@ -41,7 +34,7 @@ namespace CakeSort.World{
 
     public void Initialize(){
 
-      gridCellArray = new GridCell[gridWidthLength.x * gridWidthLength.y];
+      gridCellArray = new GridCellData[gridWidthLength.x * gridWidthLength.y];
 
       int counter = 0;
 
@@ -50,13 +43,15 @@ namespace CakeSort.World{
 
           Axis axis          = new(x, z);
           var  worldPosition = GetPosition(x, z);
-          gridCellArray[counter] = new GridCell { Axis = axis, WorldPosition = worldPosition };
+          gridCellArray[counter] = new GridCellData { Axis = axis, WorldPosition = worldPosition };
 
+        #if UNITY_EDITOR
           Debug.DrawLine(
             GetPosition(x, z) + Vector3.left * .05f,
             GetPosition(x, z) + Vector3.right * .05f,
             Color.cyan,
             1000);
+        #endif
 
           counter++;
         }

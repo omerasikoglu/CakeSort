@@ -26,7 +26,7 @@ namespace CakeSort.Input
     ""name"": ""MobileActionMap"",
     ""maps"": [
         {
-            ""name"": ""CoreLoop"",
+            ""name"": ""CoreLoopMap"",
             ""id"": ""d1669231-1195-41d8-b874-207abe226d37"",
             ""actions"": [
                 {
@@ -100,13 +100,31 @@ namespace CakeSort.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FirstTouchPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""bda530df-567c-41a5-b4da-158031dbaac4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Delta"",
+                    ""type"": ""Value"",
+                    ""id"": ""45b2393c-0cd3-4668-971b-b5a26b7ab8ad"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""963a2517-110c-4f65-af76-476cedab760f"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -201,22 +219,46 @@ namespace CakeSort.Input
                     ""action"": ""DoubleTap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aefe6d51-66e4-44c5-9c61-f65892c538e5"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirstTouchPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1605b2d2-2964-4f8f-8d16-84dd94a28b31"",
+                    ""path"": ""<Touchscreen>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Delta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-            // CoreLoop
-            m_CoreLoop = asset.FindActionMap("CoreLoop", throwIfNotFound: true);
-            m_CoreLoop_Touch = m_CoreLoop.FindAction("Touch", throwIfNotFound: true);
-            m_CoreLoop_Tap = m_CoreLoop.FindAction("Tap", throwIfNotFound: true);
-            m_CoreLoop_DoubleTap = m_CoreLoop.FindAction("DoubleTap", throwIfNotFound: true);
-            m_CoreLoop_Hold = m_CoreLoop.FindAction("Hold", throwIfNotFound: true);
-            m_CoreLoop_Slide = m_CoreLoop.FindAction("Slide", throwIfNotFound: true);
-            m_CoreLoop_Swipe = m_CoreLoop.FindAction("Swipe", throwIfNotFound: true);
-            m_CoreLoop_FirstTouch = m_CoreLoop.FindAction("FirstTouch", throwIfNotFound: true);
-            m_CoreLoop_TouchContact = m_CoreLoop.FindAction("TouchContact", throwIfNotFound: true);
+            // CoreLoopMap
+            m_CoreLoopMap = asset.FindActionMap("CoreLoopMap", throwIfNotFound: true);
+            m_CoreLoopMap_Touch = m_CoreLoopMap.FindAction("Touch", throwIfNotFound: true);
+            m_CoreLoopMap_Tap = m_CoreLoopMap.FindAction("Tap", throwIfNotFound: true);
+            m_CoreLoopMap_DoubleTap = m_CoreLoopMap.FindAction("DoubleTap", throwIfNotFound: true);
+            m_CoreLoopMap_Hold = m_CoreLoopMap.FindAction("Hold", throwIfNotFound: true);
+            m_CoreLoopMap_Slide = m_CoreLoopMap.FindAction("Slide", throwIfNotFound: true);
+            m_CoreLoopMap_Swipe = m_CoreLoopMap.FindAction("Swipe", throwIfNotFound: true);
+            m_CoreLoopMap_FirstTouch = m_CoreLoopMap.FindAction("FirstTouch", throwIfNotFound: true);
+            m_CoreLoopMap_TouchContact = m_CoreLoopMap.FindAction("TouchContact", throwIfNotFound: true);
+            m_CoreLoopMap_FirstTouchPosition = m_CoreLoopMap.FindAction("FirstTouchPosition", throwIfNotFound: true);
+            m_CoreLoopMap_Delta = m_CoreLoopMap.FindAction("Delta", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -275,38 +317,42 @@ namespace CakeSort.Input
             return asset.FindBinding(bindingMask, out action);
         }
 
-        // CoreLoop
-        private readonly InputActionMap m_CoreLoop;
-        private List<ICoreLoopActions> m_CoreLoopActionsCallbackInterfaces = new List<ICoreLoopActions>();
-        private readonly InputAction m_CoreLoop_Touch;
-        private readonly InputAction m_CoreLoop_Tap;
-        private readonly InputAction m_CoreLoop_DoubleTap;
-        private readonly InputAction m_CoreLoop_Hold;
-        private readonly InputAction m_CoreLoop_Slide;
-        private readonly InputAction m_CoreLoop_Swipe;
-        private readonly InputAction m_CoreLoop_FirstTouch;
-        private readonly InputAction m_CoreLoop_TouchContact;
-        public struct CoreLoopActions
+        // CoreLoopMap
+        private readonly InputActionMap m_CoreLoopMap;
+        private List<ICoreLoopMapActions> m_CoreLoopMapActionsCallbackInterfaces = new List<ICoreLoopMapActions>();
+        private readonly InputAction m_CoreLoopMap_Touch;
+        private readonly InputAction m_CoreLoopMap_Tap;
+        private readonly InputAction m_CoreLoopMap_DoubleTap;
+        private readonly InputAction m_CoreLoopMap_Hold;
+        private readonly InputAction m_CoreLoopMap_Slide;
+        private readonly InputAction m_CoreLoopMap_Swipe;
+        private readonly InputAction m_CoreLoopMap_FirstTouch;
+        private readonly InputAction m_CoreLoopMap_TouchContact;
+        private readonly InputAction m_CoreLoopMap_FirstTouchPosition;
+        private readonly InputAction m_CoreLoopMap_Delta;
+        public struct CoreLoopMapActions
         {
             private @MobileActionMap m_Wrapper;
-            public CoreLoopActions(@MobileActionMap wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Touch => m_Wrapper.m_CoreLoop_Touch;
-            public InputAction @Tap => m_Wrapper.m_CoreLoop_Tap;
-            public InputAction @DoubleTap => m_Wrapper.m_CoreLoop_DoubleTap;
-            public InputAction @Hold => m_Wrapper.m_CoreLoop_Hold;
-            public InputAction @Slide => m_Wrapper.m_CoreLoop_Slide;
-            public InputAction @Swipe => m_Wrapper.m_CoreLoop_Swipe;
-            public InputAction @FirstTouch => m_Wrapper.m_CoreLoop_FirstTouch;
-            public InputAction @TouchContact => m_Wrapper.m_CoreLoop_TouchContact;
-            public InputActionMap Get() { return m_Wrapper.m_CoreLoop; }
+            public CoreLoopMapActions(@MobileActionMap wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Touch => m_Wrapper.m_CoreLoopMap_Touch;
+            public InputAction @Tap => m_Wrapper.m_CoreLoopMap_Tap;
+            public InputAction @DoubleTap => m_Wrapper.m_CoreLoopMap_DoubleTap;
+            public InputAction @Hold => m_Wrapper.m_CoreLoopMap_Hold;
+            public InputAction @Slide => m_Wrapper.m_CoreLoopMap_Slide;
+            public InputAction @Swipe => m_Wrapper.m_CoreLoopMap_Swipe;
+            public InputAction @FirstTouch => m_Wrapper.m_CoreLoopMap_FirstTouch;
+            public InputAction @TouchContact => m_Wrapper.m_CoreLoopMap_TouchContact;
+            public InputAction @FirstTouchPosition => m_Wrapper.m_CoreLoopMap_FirstTouchPosition;
+            public InputAction @Delta => m_Wrapper.m_CoreLoopMap_Delta;
+            public InputActionMap Get() { return m_Wrapper.m_CoreLoopMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(CoreLoopActions set) { return set.Get(); }
-            public void AddCallbacks(ICoreLoopActions instance)
+            public static implicit operator InputActionMap(CoreLoopMapActions set) { return set.Get(); }
+            public void AddCallbacks(ICoreLoopMapActions instance)
             {
-                if (instance == null || m_Wrapper.m_CoreLoopActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_CoreLoopActionsCallbackInterfaces.Add(instance);
+                if (instance == null || m_Wrapper.m_CoreLoopMapActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_CoreLoopMapActionsCallbackInterfaces.Add(instance);
                 @Touch.started += instance.OnTouch;
                 @Touch.performed += instance.OnTouch;
                 @Touch.canceled += instance.OnTouch;
@@ -331,9 +377,15 @@ namespace CakeSort.Input
                 @TouchContact.started += instance.OnTouchContact;
                 @TouchContact.performed += instance.OnTouchContact;
                 @TouchContact.canceled += instance.OnTouchContact;
+                @FirstTouchPosition.started += instance.OnFirstTouchPosition;
+                @FirstTouchPosition.performed += instance.OnFirstTouchPosition;
+                @FirstTouchPosition.canceled += instance.OnFirstTouchPosition;
+                @Delta.started += instance.OnDelta;
+                @Delta.performed += instance.OnDelta;
+                @Delta.canceled += instance.OnDelta;
             }
 
-            private void UnregisterCallbacks(ICoreLoopActions instance)
+            private void UnregisterCallbacks(ICoreLoopMapActions instance)
             {
                 @Touch.started -= instance.OnTouch;
                 @Touch.performed -= instance.OnTouch;
@@ -359,24 +411,30 @@ namespace CakeSort.Input
                 @TouchContact.started -= instance.OnTouchContact;
                 @TouchContact.performed -= instance.OnTouchContact;
                 @TouchContact.canceled -= instance.OnTouchContact;
+                @FirstTouchPosition.started -= instance.OnFirstTouchPosition;
+                @FirstTouchPosition.performed -= instance.OnFirstTouchPosition;
+                @FirstTouchPosition.canceled -= instance.OnFirstTouchPosition;
+                @Delta.started -= instance.OnDelta;
+                @Delta.performed -= instance.OnDelta;
+                @Delta.canceled -= instance.OnDelta;
             }
 
-            public void RemoveCallbacks(ICoreLoopActions instance)
+            public void RemoveCallbacks(ICoreLoopMapActions instance)
             {
-                if (m_Wrapper.m_CoreLoopActionsCallbackInterfaces.Remove(instance))
+                if (m_Wrapper.m_CoreLoopMapActionsCallbackInterfaces.Remove(instance))
                     UnregisterCallbacks(instance);
             }
 
-            public void SetCallbacks(ICoreLoopActions instance)
+            public void SetCallbacks(ICoreLoopMapActions instance)
             {
-                foreach (var item in m_Wrapper.m_CoreLoopActionsCallbackInterfaces)
+                foreach (var item in m_Wrapper.m_CoreLoopMapActionsCallbackInterfaces)
                     UnregisterCallbacks(item);
-                m_Wrapper.m_CoreLoopActionsCallbackInterfaces.Clear();
+                m_Wrapper.m_CoreLoopMapActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
         }
-        public CoreLoopActions @CoreLoop => new CoreLoopActions(this);
-        public interface ICoreLoopActions
+        public CoreLoopMapActions @CoreLoopMap => new CoreLoopMapActions(this);
+        public interface ICoreLoopMapActions
         {
             void OnTouch(InputAction.CallbackContext context);
             void OnTap(InputAction.CallbackContext context);
@@ -386,6 +444,8 @@ namespace CakeSort.Input
             void OnSwipe(InputAction.CallbackContext context);
             void OnFirstTouch(InputAction.CallbackContext context);
             void OnTouchContact(InputAction.CallbackContext context);
+            void OnFirstTouchPosition(InputAction.CallbackContext context);
+            void OnDelta(InputAction.CallbackContext context);
         }
     }
 }

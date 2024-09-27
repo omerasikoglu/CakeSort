@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7394684319492943103}
   - component: {fileID: 4906710062383092835}
+  - component: {fileID: 2352162371494273064}
   m_Layer: 0
   m_Name: Counter
   m_TagString: Untagged
@@ -50,7 +51,28 @@ MonoBehaviour:
   - {fileID: 8891530368082730181}
   - {fileID: 3367321904322415880}
   - {fileID: 3178751085750851075}
-  cakeContainer: {fileID: 11400000, guid: 89a437c7f5ec89d4188df07bc3d5f971, type: 2}
+  plateSettings: {fileID: 11400000, guid: 1dc1c37f2cf1d9f47a927b3d79b5292d, type: 2}
+--- !u!65 &2352162371494273064
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2380506729020837737}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: -0.1, z: 0.27}
 --- !u!1 &3642657343320797869
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 5978364422894926452}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0.271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -188,7 +210,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -949,7 +971,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 556
+  m_VersionIndex: 568
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -979,7 +1001,7 @@ Transform:
   m_GameObject: {fileID: 8182453655499561850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0.271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

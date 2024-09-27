@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801a8ba875934932b26fe3e81abec7b0, type: 3}
   m_Name: 1- Strawberry Cake
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8896981215882130929, guid: 9210e92147087ff42a9ed5d0ea006c66, type: 3}
   type: 1
+  CakeSlicePrefabArray:
+  - {fileID: 8832946145010346702, guid: 67a0e617ab702bc41890ca52f9823142, type: 3}
+  - {fileID: 292646365184938610, guid: 50dc2dd387f0fba488728cee31b16a41, type: 3}
+  - {fileID: 5451740487043794677, guid: 0360fc90869e603489d0361e34047acc, type: 3}
+  - {fileID: 3572233466763973200, guid: 7b525a0b1936e584abae236a564c4d05, type: 3}
+  - {fileID: 2118446527081216204, guid: 30eda25a3a50f774988aab6401e02d19, type: 3}
+  - {fileID: 9200230139143153986, guid: fb3480480ff194e449edb9f17937ac0b, type: 3}

@@ -9,7 +9,7 @@ namespace CakeSort.Editor{
 #if UNITY_EDITOR
 
   [CustomEditor(typeof(GridManager))]
-  public class TestGridManager : UnityEditor.Editor{
+  public class EditorGridManager : UnityEditor.Editor{
     public override void OnInspectorGUI(){
       GridManager gridManager = (GridManager)target;
 

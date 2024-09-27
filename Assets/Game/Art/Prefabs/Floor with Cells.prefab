@@ -93,12 +93,92 @@ PrefabInstance:
     - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 156
+      value: 162
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedFaces.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedFaces.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[0].a
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[0].b
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[1].a
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[1].b
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[2].a
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[2].b
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[3].a
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.data[3].b
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.data[0]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.data[1]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.data[2]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 556900621836348611, guid: 2c0858315c5b2d248b5783897472192c,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.data[3]
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 5355029044613489662, guid: 2c0858315c5b2d248b5783897472192c,
         type: 3}
       propertyPath: m_Name
-      value: visual
+      value: visual - floorAndCells
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

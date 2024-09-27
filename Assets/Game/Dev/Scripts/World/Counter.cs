@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace CakeSort.World{
 
@@ -8,17 +10,25 @@ namespace CakeSort.World{
 
     [SerializeField] PlateSettings plateSettings;
 
-    public void CreatePlate(int repeatAmount = -1){
+    List<Plate> createdPlateList = new();
 
-      repeatAmount = repeatAmount == -1 ? platePlaceArray.Length : repeatAmount;
-      
-      for (int i = 0; i < repeatAmount; i++){
-        var plate = plateSettings.CreatePlate();
+    public void CreatePlate(int repeatAmount = -1){
+      // repeatAmount = repeatAmount == -1 ? platePlaceArray.Length : repeatAmount;
+
+      for (int i = 0; i < platePlaceArray.Length; i++){
+
+        var parent = platePlaceArray[i].transform;
+
+        var plate = plateSettings.Create(parent);
         plate.transform.position = platePlaceArray[i].position;
         plate.gameObject.SetActive(true);
+
+        createdPlateList.Add(plate);
       }
-      
-      // Create Cake Slices
+
+      // foreach (Plate plate in createdPlateList){
+      //   plate.FillPlateWithSlices(plate.transform);
+      // }
     }
 
   }
