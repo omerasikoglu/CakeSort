@@ -1,2 +1,2 @@
 # CakeSort
- prototype game
+ prototype cake sort game
