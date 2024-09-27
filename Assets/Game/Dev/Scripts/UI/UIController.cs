@@ -18,28 +18,31 @@ namespace CakeSort.UI{
 
     HashSet<Transform> visualSet;
 
+  #region Unity functions
     void Awake(){
       visualSet = new() { successVisual, failVisual };
     }
 
     void OnEnable(){
       gridManager.OnPlateAddedToGrid += PlateAddedToGrid;
-      gridManager.OnLevelEnded += OnLevelEnded;
-    } 
+      gridManager.OnLevelEnded       += OnLevelEnded;
+    }
+
     void OnDisable(){
       gridManager.OnPlateAddedToGrid -= PlateAddedToGrid;
-      gridManager.OnLevelEnded -= OnLevelEnded;
+      gridManager.OnLevelEnded       -= OnLevelEnded;
     }
+  #endregion
 
     void PlateAddedToGrid(int remainingMoveCount){
       this.remainingMoveCount.SetText(remainingMoveCount.ToString());
     }
 
-    void OnLevelEnded(GridManager.LevelStatus levelStatus){
+    void OnLevelEnded(LevelStatus levelStatus){
       Transform correctVisual = levelStatus switch {
-        GridManager.LevelStatus.Succeed => successVisual,
-        GridManager.LevelStatus.Failed  => failVisual,
-        _                               => null,
+        LevelStatus.Succeed => successVisual,
+        LevelStatus.Failed  => failVisual,
+        _                   => null,
       };
       OpenVisual(correctVisual);
     }

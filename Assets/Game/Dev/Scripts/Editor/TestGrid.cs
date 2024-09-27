@@ -9,20 +9,17 @@ namespace CakeSort.Editor{
 #if UNITY_EDITOR
 
   [CustomEditor(typeof(GridManager))]
-  public class EditorGridManager : UnityEditor.Editor{
+  public class TestGrid : UnityEditor.Editor{
     public override void OnInspectorGUI(){
       GridManager gridManager = (GridManager)target;
 
       DrawDefaultInspector();
-
-      if (GUILayout.Button("Test Grid Cell Coords")){
-        gridManager.TestGridCellCoords();
-      }
+      
       if (GUILayout.Button("LevelFailEnded")){
         gridManager.LevelFailEnded();
       }
-      if (GUILayout.Button("LevelSuccEnded")){
-        gridManager.LevelSuccEnded();
+      if (GUILayout.Button("LevelSuccessEnded")){
+        gridManager.LevelSuccessEnded();
       }
       
     }

@@ -9,21 +9,23 @@ namespace CakeSort.World{
 
     [Inject] GridManager gridManager;
 
-    [SerializeField] Transform[] plateRootTransformArray;
-
+    [SerializeField] Transform[]   plateRootTransformArray;
     [SerializeField] PlateSettings plateSettings;
 
-    readonly HashSet<Plate> plateSet = new();
+    bool isCounterEmpty;
+    int  moveCounter = -1;
 
-    bool       isCounterEmpty;
-    public int moveCounter = -1;
+    readonly HashSet<Plate> plateSet = new();
 
     void OnEnable(){
       gridManager.OnGridCreated      += GridCreated;
       gridManager.OnPlateAddedToGrid += MovePerformed;
     }
 
-    void OnDisable() => gridManager.OnGridCreated += GridCreated;
+    void OnDisable(){
+      gridManager.OnGridCreated      -= GridCreated;
+      gridManager.OnPlateAddedToGrid -= MovePerformed;
+    }
 
     void MovePerformed(int remainingMoveCount){
       moveCounter++;

@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a596c824f20947dd91a6c9f3fe4c1f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plateRootTransformArray: []
+  plateRootTransformArray:
+  - {fileID: 8891530368082730181}
+  - {fileID: 3367321904322415880}
+  - {fileID: 3178751085750851075}
   plateSettings: {fileID: 11400000, guid: 1dc1c37f2cf1d9f47a927b3d79b5292d, type: 2}
 --- !u!1 &3642657343320797869
 GameObject:
@@ -946,7 +949,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 625
+  m_VersionIndex: 643
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

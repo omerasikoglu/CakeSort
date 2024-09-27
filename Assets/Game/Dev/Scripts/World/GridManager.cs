@@ -6,19 +6,27 @@ using VContainer;
 
 namespace CakeSort.World{
 
+  public enum LevelStatus{
+    Reset, Failed, Succeed
+  }
+
   public class GridManager : MonoBehaviour{
 
-  #region Variables
     [Inject] readonly GridCreator gridCreator;
 
+    public event Action              OnGridCreated;
+    public event Action<LevelStatus> OnLevelEnded;       // Fail, Success, Reset
+    public event Action<int>         OnPlateAddedToGrid; // remaining move count
+
+  #region Variables
     [SerializeField] GridCell gridCellPrefab;
 
-    // assign
-    GridCellData[] mainGrid;
-
     // logic
-    GridCellData currentCellData;
-    List<Plate>  neighbourPlateList = new();
+    GridCellData[] mainGrid;
+    GridCellData   currentCellData;
+    List<Plate>    neighbourPlateList = new();
+
+    int remainingMoveCount;
 
     // data
     const int MAX_MOVE_COUNT_FOR_WIN = 40;
@@ -55,7 +63,7 @@ namespace CakeSort.World{
       // init
       remainingMoveCount = MAX_MOVE_COUNT_FOR_WIN;
       OnPlateAddedToGrid?.Invoke(remainingMoveCount);
-      OnGridCreated?.Invoke(); 
+      OnGridCreated?.Invoke();
     }
 
     void CreateGridCell(GridCellData gridCellData){
@@ -74,13 +82,16 @@ namespace CakeSort.World{
       this.currentCellData = currentCellData;
 
       OnPlateAddedToGrid?.Invoke(--remainingMoveCount);
-      
+
       UpdateMainGrid(this.currentCellData);
 
       var viableCells = GetViableAdjacentGridCells(this.currentCellData).ToList();
       if (!viableCells.Any()) return;
 
       UpdatePlates();
+
+      CheckIsGridFull();
+      CheckMoveCount();
     }
 
     void UpdatePlates(){
@@ -93,8 +104,8 @@ namespace CakeSort.World{
     void CheckHaveYouEmptySlot(){
 
       if (HaveYouOnlyOneDifferentType){
-        IsPlateFullWithSameType(out bool isPlateFull);
-        if (isPlateFull) return;
+        IsPlateFullWithSameType(out bool isYourPlateFull);
+        if (isYourPlateFull) return;
 
         LookingForNeighboursDistinct();
       }
@@ -108,7 +119,9 @@ namespace CakeSort.World{
     void LookingForNeighboursDistinct(){
       CakeType lookingCakeType = GetYourFirstCakeType;
 
-      if (!neighbourPlateList.Any()) return;
+      if (!neighbourPlateList.Any()){
+        return;
+      }
 
       foreach (var neighbourPlate in neighbourPlateList){
         for (int neighbourSlotIndex = 0; neighbourSlotIndex < 6; neighbourSlotIndex++){
@@ -120,11 +133,15 @@ namespace CakeSort.World{
     }
 
     void LookingForNeighbours(){ // you are not distinct
-      if (!neighbourPlateList.Any()) return;
+      if (!neighbourPlateList.Any()){
+        return;
+      }
 
       List<CakeType> yourCakeTypeList = GetAllDistinctCakeTypes;
 
-      if (neighbourPlateList.SelectMany(o => o.SlotIndexSliceDic.Values).Any(q => yourCakeTypeList.Any()) == false) return;
+      if (neighbourPlateList.SelectMany(o => o.SlotIndexSliceDic.Values).Any(q => yourCakeTypeList.Any()) == false){
+        return;
+      }
 
       foreach (var yourCakeType in yourCakeTypeList){
         foreach (var neighbourCakeSlice in neighbourPlateList.SelectMany(o => o.SlotIndexSliceDic.Values).Where(q => q is not null)){
@@ -173,7 +190,7 @@ namespace CakeSort.World{
       neighbourPlate.RemoveCakeSlice(neighbourSlotIndex);
 
       if (neighbourPlate.IsPlateEmpty()){
-        var neighbourGridCellData = neighbourPlate.OccupiedGridCell.gridCellData;
+        var neighbourGridCellData = neighbourPlate.OccupiedGridCell.GridCellData;
 
         neighbourGridCellData.OccupyingPlate = null;
         UpdateMainGrid(neighbourGridCellData);
@@ -226,25 +243,13 @@ namespace CakeSort.World{
     }
   #endregion
 
-  #region Grid Check
-    public enum LevelStatus{
-      Reset, Failed, Succeed
-    }
-
-    public event Action              OnGridCreated;
-    public event Action<LevelStatus> OnLevelEnded;               // Fail, Success, Reset
-    public event Action<int>         OnPlateAddedToGrid; // remaining move count
-
+  #region Grid Status
     void CheckIsGridFull(){
-
       bool isFull = mainGrid.All(o => o.OccupyingPlate != null);
-
       if (isFull){ // game ends
         OnLevelEnded?.Invoke(LevelStatus.Failed);
       }
     }
-
-    int remainingMoveCount;
 
     void CheckMoveCount(){
       if (remainingMoveCount <= 0){
@@ -259,7 +264,7 @@ namespace CakeSort.World{
       OnGridCreated?.Invoke();
 
       foreach (var cellData in mainGrid){
-        if(cellData.OccupyingPlate is null) continue;
+        if (cellData.OccupyingPlate is null) continue;
         cellData.GridCell.RemovePlateFromCell(cellData.OccupyingPlate);
         UpdateMainGrid(cellData);
       }
@@ -267,19 +272,12 @@ namespace CakeSort.World{
   #endregion
 
   #region Test
-    public void LevelSuccEnded(){
+    public void LevelSuccessEnded(){
       OnLevelEnded?.Invoke(LevelStatus.Succeed);
     }
 
     public void LevelFailEnded(){
       OnLevelEnded?.Invoke(LevelStatus.Failed);
-    }
-
-    public void TestGridCellCoords(){
-      foreach (GridCellData cell in mainGrid){
-        // Debug.Log($"<color=green>{cell.Axis.x} | {cell.Axis.z}</color>");
-        Debug.Log($"<color=green>{cell.WorldPosition}</color>");
-      }
     }
   #endregion
 

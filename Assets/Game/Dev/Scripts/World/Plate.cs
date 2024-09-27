@@ -12,14 +12,9 @@ namespace CakeSort.World{
     [SerializeField] Transform   cakeSlicesRoot;
 
     public Dictionary<int, CakeSlice> SlotIndexSliceDic{get; private set;}
-
-    public GridCell OccupiedGridCell{get; private set;}
+    public GridCell                   OccupiedGridCell {get; private set;}
 
     const int MAX_SLICE_SLOT = 6;
-
-    public void AssignGridCell(GridCell gridCell){
-      OccupiedGridCell = gridCell;
-    }
 
     void Awake(){
       SlotIndexSliceDic = new();
@@ -28,7 +23,11 @@ namespace CakeSort.World{
       }
     }
 
-  #region Creation
+    public void AssignGridCell(GridCell gridCell){
+      OccupiedGridCell = gridCell;
+    }
+
+  #region Create
     public void FillPlateWithSlices(){
       for (int slotIndex = 0; slotIndex < MAX_SLICE_SLOT; slotIndex++){
 
@@ -54,7 +53,7 @@ namespace CakeSort.World{
       cakeSlice.gameObject.SetActive(true);
 
       SlotIndexSliceDic[slotIndex] = cakeSlice;
-      cakeSlice.SetPlate(this);
+      cakeSlice.AssignPlate(this);
     }
   #endregion
 
@@ -75,8 +74,6 @@ namespace CakeSort.World{
 
     public bool IsPlateFull(){
       return !SlotIndexSliceDic.Values.Any(o => o is null);
-
-      return SlotIndexSliceDic.Values.All(o => o != null);
     }
 
     public bool IsPlateEmpty() => SlotIndexSliceDic.Values.All(o => o is null);
@@ -104,7 +101,7 @@ namespace CakeSort.World{
       cakeSlice.transform.localEulerAngles = new(0f, 60f * slotIndex, 0f);
 
       cakeSlice.SetSliceSlot(slotIndex);
-      cakeSlice.SetPlate(this);
+      cakeSlice.AssignPlate(this);
       cakeSlice.transform.SetParent(cakeSlicesRoot);
 
       SlotIndexSliceDic[slotIndex] = cakeSlice;
@@ -121,37 +118,6 @@ namespace CakeSort.World{
     public void AscendFullPlate(){
       OccupiedGridCell.RemovePlateFromCell(this);
 
-    }
-  #endregion
-
-  #region Obsolete
-    public void TryPutCakeSliceToEmptySlot(CakeSlice cakeSlice){
-      if (!CheckPlateContainsOnlyOneTypeOfCake()) return;
-
-      AddCakeSliceToEmptySlot(cakeSlice);
-
-      CheckIsPlateFullWithSameType();
-    }
-
-    bool CheckPlateContainsOnlyOneTypeOfCake(){
-      var nonEmptyCakeTypes = SlotIndexSliceDic.Values.
-        Where(o => o.CakeType != CakeType.Empty).Distinct();
-      return nonEmptyCakeTypes.Count() == 1;
-    }
-
-    void AddCakeSliceToEmptySlot(CakeSlice cakeSlice){
-      var slotIndex = cakeSlice.Settings.SliceSlotIndex;
-
-      if (SlotIndexSliceDic[slotIndex] != null) return;
-
-      // cakeSlice.transform.SetParent();
-    }
-
-    void CheckIsPlateFullWithSameType(){
-
-      // if (sliceSlotCakeTypeDic.Count != MAX_SLICE_SLOT) return false;
-
-      // var a = sliceSlotCakeTypeDic[CakeType.Chocolate];
     }
   #endregion
 

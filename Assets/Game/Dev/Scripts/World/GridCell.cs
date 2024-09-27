@@ -1,5 +1,4 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CakeSort.World{
@@ -9,18 +8,17 @@ namespace CakeSort.World{
     public Vector3     WorldPosition;
     public GridManager GridManager;
     public GridCell    GridCell;
-    
-    public Plate       OccupyingPlate; // if null => empty
+
+    public Plate OccupyingPlate; // if null = empty
   }
 
   public class GridCell : MonoBehaviour{
 
     MeshRenderer emptyCellLight; // if cell is empty light enabled
 
-    public GridCellData gridCellData;
-
     bool isPlateHovered;
-    // public bool IsOccupied{get; private set;}
+
+    public GridCellData GridCellData{get; private set;}
 
   #region Unity functions
     void Awake(){
@@ -31,8 +29,8 @@ namespace CakeSort.World{
 
   #region Collision
     void OnTriggerEnter(Collider other){
-      if (gridCellData.OccupyingPlate != null) return;
-      if (gridCellData.OccupyingPlate) return;
+      if (GridCellData.OccupyingPlate != null) return;
+      if (GridCellData.OccupyingPlate) return;
 
       other.TryGetComponent(out IDrag drag);
 
@@ -44,8 +42,8 @@ namespace CakeSort.World{
     }
 
     void OnTriggerExit(Collider other){
-      if (gridCellData.OccupyingPlate != null) return;
-      if (gridCellData.OccupyingPlate) return;
+      if (GridCellData.OccupyingPlate != null) return;
+      if (GridCellData.OccupyingPlate) return;
 
       other.TryGetComponent(out IDrag drag);
 
@@ -59,34 +57,32 @@ namespace CakeSort.World{
 
   #region Assign
     public void AssignGridCellData(GridCellData gridCellData){
-      this.gridCellData = gridCellData;
+      GridCellData = gridCellData;
     }
   #endregion
 
-  #region Set
     public void AddPlateToCell(Plate plate){
-      gridCellData.OccupyingPlate = plate;
-      gridCellData.GridCell       = this;
-      gridCellData.OccupyingPlate.AssignGridCell(this);
-      gridCellData.GridManager.UpdateGrid(gridCellData);
+      GridCellData.OccupyingPlate = plate;
+      GridCellData.GridCell       = this;
+      GridCellData.OccupyingPlate.AssignGridCell(this);
+      GridCellData.GridManager.UpdateGrid(GridCellData);
 
       plate.AssignGridCell(this);
-      
+
       TurnOffLight();
       // IsOccupied = true;
     }
 
     public void RemovePlateFromCell(Plate plate){ // plate ascend
-      
+
       // gridCellData.OccupyingPlate.AssignGridCell(null);
-      gridCellData.OccupyingPlate = null;
+      GridCellData.OccupyingPlate = null;
       // IsOccupied                  = false;
       TurnOffLight();
       Destroy(plate.gameObject);
       // gridCellData.GridManager.UpdateGrid(gridCellData);
 
     }
-  #endregion
 
     void TurnOnLight(){
       isPlateHovered         = true;
@@ -97,9 +93,6 @@ namespace CakeSort.World{
       isPlateHovered         = false;
       emptyCellLight.enabled = false;
     }
-
-    // public void SetIsOccupied(bool isOccupied) => IsOccupied = isOccupied;
-
   }
 
 }
