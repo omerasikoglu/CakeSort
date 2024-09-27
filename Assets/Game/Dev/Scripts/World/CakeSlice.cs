@@ -12,9 +12,18 @@ namespace CakeSort.World{
 
     public int CakeSliceSlot{get; private set;}
 
+    public Plate Plate;
+
     void Start(){
       CakeType = Settings.type;
       CakeSliceSlot = Settings.SliceSlotIndex;
+    }
+
+    public void SetSliceSlot(int newSlot){
+      CakeSliceSlot = newSlot;
+    }  
+    public void SetPlate(Plate plate){
+      Plate = plate;
     }
   }
 

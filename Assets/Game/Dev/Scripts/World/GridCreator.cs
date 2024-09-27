@@ -24,7 +24,7 @@ namespace CakeSort.World{
 
   public class GridCreator : IInitializable{
 
-    public event Action<GridCellInfo[]> OnGridCompleted; // gridCell
+    public event Action<GridCellData[]> OnGridCompleted; // gridCell
 
   #region Data
     const float X_INTERVAL = 0.2f;
@@ -34,7 +34,7 @@ namespace CakeSort.World{
 
     Vector2Int gridWidthLength;
 
-    GridCellInfo[] gridCellArray; // = grid
+    GridCellData[] gridCellArray; // = grid
 
     public GridCreator(Vector2Int gridWidthLength){
       this.gridWidthLength = gridWidthLength;
@@ -42,7 +42,7 @@ namespace CakeSort.World{
 
     public void Initialize(){
 
-      gridCellArray = new GridCellInfo[gridWidthLength.x * gridWidthLength.y];
+      gridCellArray = new GridCellData[gridWidthLength.x * gridWidthLength.y];
 
       int counter = 0;
 
@@ -51,7 +51,7 @@ namespace CakeSort.World{
 
           Axis axis          = new(x, z);
           var  worldPosition = GetPosition(x, z);
-          gridCellArray[counter] = new GridCellInfo {
+          gridCellArray[counter] = new GridCellData {
             Axis = axis, 
             WorldPosition = worldPosition, 
             OccupyingPlate = null, 

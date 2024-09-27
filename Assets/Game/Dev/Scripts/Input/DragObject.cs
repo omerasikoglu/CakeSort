@@ -10,12 +10,12 @@ namespace CakeSort.World{
 
     BoxCollider boxCollider;
     GridCell    currentGridCell;
-    Plate       attachedPlate;
+    Plate       draggingPlate;
 
     bool isDraggable = true;
 
     void Awake(){
-      attachedPlate = GetComponent<Plate>();
+      draggingPlate = GetComponent<Plate>();
       boxCollider   = GetComponent<BoxCollider>();
       startMovePos  = transform.position;
     }
@@ -33,10 +33,11 @@ namespace CakeSort.World{
       }
       else{ // put it inside the grid cell
         transform.position = currentGridCell.transform.position;
-        currentGridCell.AddPlateToCell(attachedPlate);
+        transform.SetParent(currentGridCell.transform);
+        currentGridCell.AddPlateToCell(draggingPlate);
+        
         boxCollider.enabled = false;
         isDraggable         = false;
-        transform.SetParent(currentGridCell.transform);
       }
 
       currentGridCell = null;

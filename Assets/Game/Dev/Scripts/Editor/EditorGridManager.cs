@@ -33,19 +33,6 @@ namespace CakeSort.Editor{
       }
     }
   }
-  
-  [CustomEditor(typeof(Plate))]
-  public class TestPlate : UnityEditor.Editor{
-    public override void OnInspectorGUI(){
-      Plate plate = (Plate)target;
-
-      DrawDefaultInspector();
-
-      if (GUILayout.Button("Test List Debug")){
-        plate.Dbg();
-      }
-    }
-  }
 
 #endif
 

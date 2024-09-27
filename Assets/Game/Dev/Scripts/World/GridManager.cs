@@ -8,13 +8,30 @@ namespace CakeSort.World{
 
   public class GridManager : MonoBehaviour{
 
+  #region Variables
     [Inject] readonly GridCreator gridCreator;
 
     [SerializeField] GridCell gridCellPrefab;
 
-    GridCellInfo[] mainGrid; // cast
+    // assign
+    GridCellData[] mainGrid;
 
-    Dictionary<GridCellInfo, Plate> gridCellPlateDic; // not positions | 01,02,03,04,10,11,12,13..
+    // logic
+    GridCellData currentCellData;
+    List<Plate>  neighbourPlateList = new();
+  #endregion
+
+  #region Properties
+    Plate CurrentPlate => currentCellData?.OccupyingPlate;
+
+    CakeType       GetYourFirstCakeType    => CurrentPlate.GetFirstCakeType();
+    List<CakeType> GetAllDistinctCakeTypes => CurrentPlate.GetAllDistinctCakeTypes();
+
+    bool HaveAnySlice                => CurrentPlate.HaveAnySlice();
+    bool HaveYouOnlyOneDifferentType => CurrentPlate.HaveOnlyOneDistinctType();
+    bool HaveEmptySlot               => CurrentPlate.HaveEmptySlot();
+    bool IsPlateFull                 => CurrentPlate.IsPlateFull();
+  #endregion
 
   #region Observer
     void OnEnable(){
@@ -25,111 +42,165 @@ namespace CakeSort.World{
       gridCreator.OnGridCompleted -= OnGridCompleted;
     }
 
-    void OnGridCompleted(GridCellInfo[] gridCellInfoArray){
-      InitDic(gridCellInfoArray);
+    void OnGridCompleted(GridCellData[] mainGrid){
+      this.mainGrid = mainGrid;
 
-      this.mainGrid = gridCellInfoArray;
-
-      foreach (GridCellInfo gridCellInfo in gridCellInfoArray){
+      foreach (GridCellData gridCellInfo in mainGrid){
         CreateGridCell(gridCellInfo);
       }
 
     }
 
-    void InitDic(IEnumerable<GridCellInfo> grid){
-      gridCellPlateDic = new();
-      foreach (GridCellInfo cell in grid){
-        gridCellPlateDic[cell] = null;
-      }
-
-      foreach (var key in gridCellPlateDic.Keys){
-        // Debug.Log($"<color=green>{key.Axis.x}{key.Axis.z}</color>");
-      }
-    }
-
-    void CreateGridCell(GridCellInfo gridCellInfo){
-      var spawnPos = gridCellInfo.WorldPosition;
+    void CreateGridCell(GridCellData gridCellData){
+      var spawnPos = gridCellData.WorldPosition;
 
       var gridCell = Instantiate(gridCellPrefab, spawnPos, Quaternion.identity, transform);
 
-      gridCellInfo.GridManager = this;
-      gridCellInfo.GridCell    = gridCell;
-
-      // gridCell.SetGridManager(this);
-      gridCell.SetGridCellInfo(gridCellInfo);
+      gridCellData.GridManager = this;
+      gridCellData.GridCell    = gridCell;
+      gridCell.AssignGridCellData(gridCellData);
     }
   #endregion
 
-  #region Logic
-    public void UpdateGrid(GridCellInfo updatedGridCellInfo){
-      mainGrid = mainGrid.Select(o => o == updatedGridCellInfo ? updatedGridCellInfo : o).ToArray();
+  #region Logic // UML is inside the project
+    public void UpdateGrid(GridCellData currentCellData){
+      this.currentCellData = currentCellData;
 
-      LookAtNeighbours(updatedGridCellInfo);
-    }
+      UpdateMainGrid(this.currentCellData);
 
-    void LookAtNeighbours(GridCellInfo currentCellInfo){
-
-      var viableCells = GetViableAdjacentGridCells(currentCellInfo).ToList();
+      var viableCells = GetViableAdjacentGridCells(this.currentCellData).ToList();
       if (!viableCells.Any()) return;
 
-      var viableNonPlateOccupiedCells = viableCells.Where(o => o.OccupyingPlate is null).ToList();
-      if (!viableNonPlateOccupiedCells.Any()) return;
+      UpdatePlates();
+    }
 
-      var currentPlate = currentCellInfo.OccupyingPlate;
-      if (!currentPlate.HaveAnySlice()){
-        // currentCellInfo.Axis
-        return;
+    void UpdatePlates(){
+      HaveYouAnySlice(out bool isPlateEmpty);
+      if (isPlateEmpty) return;
+
+      CheckHaveYouEmptySlot();
+    }
+
+    void CheckHaveYouEmptySlot(){
+
+      if (HaveYouOnlyOneDifferentType){
+        IsPlateFullWithSameType(out bool isPlateFull);
+        if (isPlateFull) return;
+
+        LookingForNeighboursDistinct();
       }
+      else{ // you have more than 1 types
 
-      IsCurrentPlateHaveOneDifferentTypeOfSlice(currentCellInfo, viableNonPlateOccupiedCells, viableCells);
+        LookingForNeighbours();
 
+      }
     }
 
-    static bool IsCurrentPlateHaveAnySlice(GridCellInfo currentGridCell){
-      return currentGridCell.OccupyingPlate.GetSliceSlotDic().Count > 0;
+    void LookingForNeighboursDistinct(){
+      CakeType lookingCakeType = GetYourFirstCakeType;
+
+      if (!neighbourPlateList.Any()) return;
+
+      foreach (var neighbourPlate in neighbourPlateList){
+        for (int neighbourSlotIndex = 0; neighbourSlotIndex < 6; neighbourSlotIndex++){
+          if (neighbourPlate.SlotIndexSliceDic[neighbourSlotIndex]?.CakeType != lookingCakeType) continue;
+          AddSliceFromNeighbour(neighbourPlate, neighbourSlotIndex);
+          return;
+        }
+      }
     }
 
-    void IsCurrentPlateHaveOneDifferentTypeOfSlice(GridCellInfo currentGridCell, List<GridCellInfo> viablePlateCells, List<GridCellInfo> viableGridCells){
-      if (IsCurrentPlateOnlyHaveOneType(viablePlateCells)){ // Neighbours come to here
+    void LookingForNeighbours(){ // you are not distinct
+      if (!neighbourPlateList.Any()) return;
 
-        var currentDic = currentGridCell.OccupyingPlate.GetSliceSlotDic();
+      List<CakeType> yourCakeTypeList = GetAllDistinctCakeTypes;
 
-        if (!CheckIsAnyEmptyPlateSlot(currentGridCell)) return;
+      if (neighbourPlateList.SelectMany(o => o.SlotIndexSliceDic.Values).Any(q => yourCakeTypeList.Any()) == false) return;
 
-        var currentPlateSliceType = currentDic.Values.First(o => o != null).CakeType;
+      foreach (var yourCakeType in yourCakeTypeList){
+        foreach (var neighbourCakeSlice in neighbourPlateList.SelectMany(o => o.SlotIndexSliceDic.Values).Where(q => q is not null)){
+          if (neighbourCakeSlice == null) continue;
+          if (neighbourCakeSlice.Plate == null) continue;
+          if (yourCakeType != neighbourCakeSlice.CakeType) continue;
 
-        foreach (GridCellInfo gridCellInfo in viableGridCells){
+          var targetPlate = neighbourCakeSlice.Plate;
+          
+          if (targetPlate.IsPlateFull()) continue;
 
-          var targetPlate      = gridCellInfo.OccupyingPlate;
-          var targetSliceArray = targetPlate.GetSliceSlotDic();
+          var yourRemovedSliceSlotIndex = CurrentPlate.GetLastSlotIndexOfCakeType(yourCakeType);
 
-          CakeSlice targetSlice;
-          int       targetSlotIndex = -1;
-
-          for (int i = 0; i < targetSliceArray.Count; i++){
-            if (targetSliceArray[i].CakeType != currentPlateSliceType) return;
-            targetSlice     = targetSliceArray[i];
-            targetSlotIndex = i;
-          }
-
-          targetPlate.RemoveCakeSlice(targetSlotIndex);
+          AddSliceToNeighbour(targetPlate, yourRemovedSliceSlotIndex);
+          
+          return;
         }
       }
 
-      else{
-        // TODO: ASCEND EMPTY PLATE
+    }
+
+    void AddSliceToNeighbour(Plate neighbourPlate, int yourRemovedSliceSlotIndex){
+      var neighbourEmptySlot = neighbourPlate.GetFirstEmptySlotIndex();
+      var cakeSlice          = CurrentPlate.SlotIndexSliceDic[yourRemovedSliceSlotIndex];
+
+      CurrentPlate.RemoveCakeSlice(yourRemovedSliceSlotIndex);
+      neighbourPlate.AddCakeSlice(neighbourEmptySlot, cakeSlice);
+      
+      if(neighbourPlate.IsPlateFull() ) neighbourPlate.AscendEmptyPlate();
+
+      UpdatePlates();
+
+    }
+
+    void AddSliceFromNeighbour(Plate neighbourPlate, int neighbourSlotIndex){
+
+      int yourfirstEmptySlotIndex = CurrentPlate.SlotIndexSliceDic.
+        Where(o => o.Value is null).
+        Select(kvp => kvp.Key).
+        FirstOrDefault();
+
+      var neighbourCakeSlice = neighbourPlate.SlotIndexSliceDic[neighbourSlotIndex];
+
+      CurrentPlate.AddCakeSlice(yourfirstEmptySlotIndex, neighbourCakeSlice);
+
+      neighbourPlate.RemoveCakeSlice(neighbourSlotIndex);
+
+      if (neighbourPlate.IsPlateEmpty()){
+        var neighbourGridCellData = neighbourPlate.OccupiedGridCell.gridCellData;
+
+        neighbourGridCellData.OccupyingPlate = null;
+        UpdateMainGrid(neighbourGridCellData);
+        neighbourPlate.AscendEmptyPlate();
       }
+
+      CheckHaveYouEmptySlot();
     }
 
-    bool CheckIsAnyEmptyPlateSlot(GridCellInfo currentGridCell){
-      return currentGridCell.OccupyingPlate.GetSliceSlotDic().Any(o => o.Value is null);
+    // ------------------------
+
+    void HaveYouAnySlice(out bool isPlateEmpty){
+
+      isPlateEmpty = !HaveAnySlice;
+
+      if (!isPlateEmpty){ // empty plate
+        // !: Ascend plate
+      }
+
     }
 
-    bool IsCurrentPlateOnlyHaveOneType(IEnumerable<GridCellInfo> viableGridCells){
-      return viableGridCells.Distinct().Count() == 1;
+    void IsPlateFullWithSameType(out bool isPlateFull){
+
+      isPlateFull = IsPlateFull;
+
+      if (!isPlateFull) return;
+
+      CurrentPlate.AscendFullPlate();
+      UpdateMainGrid(currentCellData);
     }
 
-    IEnumerable<GridCellInfo> GetViableAdjacentGridCells(GridCellInfo currentGridCell){
+    void UpdateMainGrid(GridCellData gridCellData){ // only update current cell data
+      mainGrid = mainGrid.Select(o => o.Axis == gridCellData.Axis ? gridCellData : o).ToArray();
+    }
+
+    IEnumerable<GridCellData> GetViableAdjacentGridCells(GridCellData currentGridCell){
       var currentX = currentGridCell.Axis.x;
       var currentZ = currentGridCell.Axis.z;
 
@@ -138,26 +209,27 @@ namespace CakeSort.World{
       var targetUpAdjacent    = currentZ + 1;
       var targetDownAdjacent  = currentZ - 1;
 
-      Axis potantialRightNeighbour = new(targetRightAdjacent, currentZ);
       Axis potantialLeftNeighbour  = new(targetLeftAdjacent, currentZ);
+      Axis potantialRightNeighbour = new(targetRightAdjacent, currentZ);
       Axis potantialUpNeighbour    = new(currentX, targetUpAdjacent);
       Axis potantialDownNeighbour  = new(currentX, targetDownAdjacent);
 
       List<Axis> potantialNeighbourList = new() { potantialLeftNeighbour, potantialRightNeighbour, potantialUpNeighbour, potantialDownNeighbour };
 
-      return mainGrid.Where(o =>
-        potantialNeighbourList.Contains(o.Axis) &&
-        o.OccupyingPlate == null);
+      var viableGridCells = mainGrid.Where(o => potantialNeighbourList.Contains(o.Axis));
+      // var viableNonPlateOccupiedCells = viableGridCells.Where(o => o.OccupyingPlate is null).ToList();
+      var viablePlateOccupiedCells = viableGridCells.Where(o => o.OccupyingPlate is not null).ToList();
+
+      neighbourPlateList = viablePlateOccupiedCells.Where(
+        o => o.OccupyingPlate is not null).Select(o => o.OccupyingPlate).ToList();
+
+      return viablePlateOccupiedCells;
     }
-
-    public void HasNeighbourCellsHaveSameTypeCake(){ }
-
-    void GetPlateEmptySlotCount(){ }
   #endregion
 
   #region Test
     public void TestGridCellCoords(){
-      foreach (GridCellInfo cell in mainGrid){
+      foreach (GridCellData cell in mainGrid){
         // Debug.Log($"<color=green>{cell.Axis.x} | {cell.Axis.z}</color>");
         Debug.Log($"<color=green>{cell.WorldPosition}</color>");
       }
