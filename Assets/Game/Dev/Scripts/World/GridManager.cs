@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
@@ -18,6 +19,9 @@ namespace CakeSort.World{
     // logic
     GridCellData currentCellData;
     List<Plate>  neighbourPlateList = new();
+
+    // data
+    const int MAX_MOVE_COUNT_FOR_WIN = 40;
   #endregion
 
   #region Properties
@@ -26,7 +30,7 @@ namespace CakeSort.World{
     CakeType       GetYourFirstCakeType    => CurrentPlate.GetFirstCakeType();
     List<CakeType> GetAllDistinctCakeTypes => CurrentPlate.GetAllDistinctCakeTypes();
 
-    bool HaveAnySlice                => CurrentPlate.HaveAnySlice();
+    bool HaveYouAnySlice             => CurrentPlate.HaveAnySlice();
     bool HaveYouOnlyOneDifferentType => CurrentPlate.HaveOnlyOneDistinctType();
     bool HaveEmptySlot               => CurrentPlate.HaveEmptySlot();
     bool IsPlateFull                 => CurrentPlate.IsPlateFull();
@@ -48,6 +52,8 @@ namespace CakeSort.World{
         CreateGridCell(gridCellInfo);
       }
 
+      remainingMoveCount = MAX_MOVE_COUNT_FOR_WIN; // init
+      OnUpdateRemainingMoveCount?.Invoke(remainingMoveCount);   // init
     }
 
     void CreateGridCell(GridCellData gridCellData){
@@ -61,10 +67,12 @@ namespace CakeSort.World{
     }
   #endregion
 
-  #region Logic // UML is inside the project
+  #region Logic // UML link is: Assets/Game/Dev
     public void UpdateGrid(GridCellData currentCellData){
       this.currentCellData = currentCellData;
 
+      OnUpdateRemainingMoveCount?.Invoke(--remainingMoveCount);
+      
       UpdateMainGrid(this.currentCellData);
 
       var viableCells = GetViableAdjacentGridCells(this.currentCellData).ToList();
@@ -74,8 +82,8 @@ namespace CakeSort.World{
     }
 
     void UpdatePlates(){
-      HaveYouAnySlice(out bool isPlateEmpty);
-      if (isPlateEmpty) return;
+
+      if (!HaveYouAnySlice) return;
 
       CheckHaveYouEmptySlot();
     }
@@ -123,13 +131,13 @@ namespace CakeSort.World{
           if (yourCakeType != neighbourCakeSlice.CakeType) continue;
 
           var targetPlate = neighbourCakeSlice.Plate;
-          
+
           if (targetPlate.IsPlateFull()) continue;
 
           var yourRemovedSliceSlotIndex = CurrentPlate.GetLastSlotIndexOfCakeType(yourCakeType);
 
           AddSliceToNeighbour(targetPlate, yourRemovedSliceSlotIndex);
-          
+
           return;
         }
       }
@@ -142,8 +150,8 @@ namespace CakeSort.World{
 
       CurrentPlate.RemoveCakeSlice(yourRemovedSliceSlotIndex);
       neighbourPlate.AddCakeSlice(neighbourEmptySlot, cakeSlice);
-      
-      if(neighbourPlate.IsPlateFull() ) neighbourPlate.AscendEmptyPlate();
+
+      if (neighbourPlate.IsPlateFull()) neighbourPlate.AscendEmptyPlate();
 
       UpdatePlates();
 
@@ -174,16 +182,6 @@ namespace CakeSort.World{
     }
 
     // ------------------------
-
-    void HaveYouAnySlice(out bool isPlateEmpty){
-
-      isPlateEmpty = !HaveAnySlice;
-
-      if (!isPlateEmpty){ // empty plate
-        // !: Ascend plate
-      }
-
-    }
 
     void IsPlateFullWithSameType(out bool isPlateFull){
 
@@ -226,7 +224,47 @@ namespace CakeSort.World{
     }
   #endregion
 
+  #region Grid Check
+    public enum LevelStatus{
+      Reset, Failed, Succeed
+    }
+
+    public event Action<LevelStatus> OnLevelEnded;  // Fail, Success, Reset
+    public event Action<int>         OnUpdateRemainingMoveCount; // remaining move count
+
+    void CheckIsGridFull(){
+
+      bool isFull = mainGrid.All(o => o.OccupyingPlate != null);
+
+      if (isFull){ // game ends
+        OnLevelEnded?.Invoke(LevelStatus.Failed);
+      }
+    }
+
+    int remainingMoveCount;
+
+    void CheckMoveCount(){
+      if (remainingMoveCount <= 0){
+        OnLevelEnded?.Invoke(LevelStatus.Succeed);
+      }
+    }
+
+    public void ResetGrid(){
+      remainingMoveCount = MAX_MOVE_COUNT_FOR_WIN;
+      OnLevelEnded?.Invoke(LevelStatus.Reset);
+      OnUpdateRemainingMoveCount?.Invoke(remainingMoveCount);
+    }
+  #endregion
+
   #region Test
+    public void LevelSuccEnded(){
+      OnLevelEnded?.Invoke(LevelStatus.Succeed);
+    }
+
+    public void LevelFailEnded(){
+      OnLevelEnded?.Invoke(LevelStatus.Failed);
+    }
+
     public void TestGridCellCoords(){
       foreach (GridCellData cell in mainGrid){
         // Debug.Log($"<color=green>{cell.Axis.x} | {cell.Axis.z}</color>");

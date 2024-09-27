@@ -18,6 +18,13 @@ namespace CakeSort.Editor{
       if (GUILayout.Button("Test Grid Cell Coords")){
         gridManager.TestGridCellCoords();
       }
+      if (GUILayout.Button("LevelFailEnded")){
+        gridManager.LevelFailEnded();
+      }
+      if (GUILayout.Button("LevelSuccEnded")){
+        gridManager.LevelSuccEnded();
+      }
+      
     }
   }
 
