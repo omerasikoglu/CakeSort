@@ -1,30 +1,52 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CakeSort.World{
 
-  [Serializable] public class GridCellData{
+  [Serializable] public class GridCellInfo{
     public Axis     Axis;
     public Vector3  WorldPosition;
-    public bool     IsEmpty  = true; // TODO: remove | ADD: Plate CurrentPlate
-    public CakeType cakeType = CakeType.Empty;
+    public GridManager GridManager;
+    public GridCell GridCell;
+    public Plate    OccupyingPlate; // if null => empty
   }
 
   public class GridCell : MonoBehaviour{
 
+    MeshRenderer        emptyCellLight; // if cell is empty light enabled
+   
+    // GridManager         gridManager;
+    // GridCell            gridCell;
+    public GridCellInfo gridCellInfo;
+
     bool isPlateHovered;
+    bool isOccupied; // with plate
 
-    MeshRenderer canPutPlateLight;
-
-    Plate currentPlate; // occupied plate
-
+  #region Unity functions
     void Awake(){
-      canPutPlateLight = GetComponentInChildren<MeshRenderer>();
+      emptyCellLight = GetComponentInChildren<MeshRenderer>();
       TurnOffLight();
     }
+  #endregion
 
+  #region Cast
+    // public void SetGridManager(GridManager gridManager){
+    //   this.gridManager = gridManager;
+    // }
+    // public void SetGridCell(GridCell gridCell){
+    //   this.gridCell = gridCell;
+    // }
+
+    public void SetGridCellInfo(GridCellInfo gridCellInfo){
+      this.gridCellInfo = gridCellInfo;
+    }
+  #endregion
+
+  #region Collision
     void OnTriggerEnter(Collider other){
-      if (currentPlate != null) return;
+      if (gridCellInfo.OccupyingPlate != null) return;
+      if (isOccupied) return;
 
       other.TryGetComponent(out IDrag drag);
 
@@ -36,7 +58,8 @@ namespace CakeSort.World{
     }
 
     void OnTriggerExit(Collider other){
-      if (currentPlate != null) return;
+      if (gridCellInfo.OccupyingPlate != null) return;
+      if (isOccupied) return;
 
       other.TryGetComponent(out IDrag drag);
 
@@ -46,23 +69,37 @@ namespace CakeSort.World{
       isPlateHovered = false;
       TurnOffLight();
     }
+  #endregion
 
     public void AddPlateToCell(Plate plate){
-      currentPlate = plate;
+      gridCellInfo.OccupyingPlate = plate;
       TurnOffLight();
+      isOccupied = true;
+
+      gridCellInfo.GridManager.UpdateGrid(gridCellInfo);
+    }
+
+    public async UniTaskVoid RemovePlateFromCell(){ // Empty plate ascend
+      gridCellInfo.OccupyingPlate = null;
+      isOccupied                  = false;
+
+      await UniTask.WaitForSeconds(1f);
+      Debug.Log($"<color=red>{"plate removed"}</color>");
+      gridCellInfo.GridManager.UpdateGrid(gridCellInfo);
+
     }
 
     void TurnOnLight(){
-      isPlateHovered           = true;
-      canPutPlateLight.enabled = true;
+      isPlateHovered         = true;
+      emptyCellLight.enabled = true;
     }
 
     public void TurnOffLight(){
-      isPlateHovered           = false;
-      canPutPlateLight.enabled = false;
+      isPlateHovered         = false;
+      emptyCellLight.enabled = false;
     }
 
-    public void RemovePlate() => currentPlate = null;
+    public bool IsOccupied() => isOccupied;
 
   }
 

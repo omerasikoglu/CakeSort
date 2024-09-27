@@ -12,11 +12,19 @@ namespace CakeSort.World{
       this.x = x;
       this.z = z;
     }
+    
+    public static bool operator ==(Axis operand1, Axis operand2){
+      return operand1.x == operand2.x && operand1.z == operand2.z;
+    }
+        
+    public static bool operator !=(Axis operand1, Axis operand2){
+      return !(operand1 == operand2);
+    }
   }
 
   public class GridCreator : IInitializable{
 
-    public event Action<GridCellData[]> OnGridCompleted; // gridCell
+    public event Action<GridCellInfo[]> OnGridCompleted; // gridCell
 
   #region Data
     const float X_INTERVAL = 0.2f;
@@ -26,7 +34,7 @@ namespace CakeSort.World{
 
     Vector2Int gridWidthLength;
 
-    GridCellData[] gridCellArray; // = grid
+    GridCellInfo[] gridCellArray; // = grid
 
     public GridCreator(Vector2Int gridWidthLength){
       this.gridWidthLength = gridWidthLength;
@@ -34,7 +42,7 @@ namespace CakeSort.World{
 
     public void Initialize(){
 
-      gridCellArray = new GridCellData[gridWidthLength.x * gridWidthLength.y];
+      gridCellArray = new GridCellInfo[gridWidthLength.x * gridWidthLength.y];
 
       int counter = 0;
 
@@ -43,7 +51,12 @@ namespace CakeSort.World{
 
           Axis axis          = new(x, z);
           var  worldPosition = GetPosition(x, z);
-          gridCellArray[counter] = new GridCellData { Axis = axis, WorldPosition = worldPosition };
+          gridCellArray[counter] = new GridCellInfo {
+            Axis = axis, 
+            WorldPosition = worldPosition, 
+            OccupyingPlate = null, 
+            GridCell = null
+          };
 
         #if UNITY_EDITOR
           Debug.DrawLine(

@@ -9,9 +9,12 @@ namespace CakeSort.World{
     public CakeSliceSettings Settings{get; set;}
 
     public CakeType CakeType{get; private set;}
-    
-    void Awake(){
-      // CakeType = Settings.type;
+
+    public int CakeSliceSlot{get; private set;}
+
+    void Start(){
+      CakeType = Settings.type;
+      CakeSliceSlot = Settings.SliceSlotIndex;
     }
   }
 

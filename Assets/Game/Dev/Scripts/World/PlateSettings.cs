@@ -7,7 +7,7 @@ namespace CakeSort.World{
 
     public GameObject prefab;
     
-    public CakeSliceSettings[] cakeSettings;
+    public CakeSliceSettings[] cakeSliceSettings;
 
     public Plate Create(Transform parent){
       GameObject go       = Instantiate(prefab, parent);

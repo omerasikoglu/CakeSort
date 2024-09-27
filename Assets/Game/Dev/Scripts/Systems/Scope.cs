@@ -22,6 +22,7 @@ namespace CakeSort.Systems{
       builder.Register<GridCreator>(Lifetime.Scoped).WithParameter(GRID_WIDTH_LENGTH); // for GameManager, GridManager
 
       builder.RegisterComponentInHierarchy<GridManager>().UnderTransform(transform); // for GameManager, need GridCreator
+      builder.RegisterComponentInHierarchy<Counter>().UnderTransform(transform); // need GridManager
     }
   }
 

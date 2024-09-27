@@ -1,5 +1,4 @@
-﻿using System;
-using CakeSort.Input;
+﻿using CakeSort.Input;
 using CakeSort.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace CakeSort.World{
     Vector3 velocity = Vector3.zero;
 
     bool isDragging;
-    
+
     const float MAX_RAY_DISTANCE = 100f;
     const float DRAG_Y_HEIGHT    = 0.1f;
 
@@ -37,10 +36,6 @@ namespace CakeSort.World{
     }
   #endregion
 
-    void Update(){
-      Debug.Log($"<color=green>{ mobileActionMap.CoreLoopMap.TouchContact.ReadValue<float>()}</color>");
-    }
-
   #region Callbacks
     void TouchPerformed(InputAction.CallbackContext ctx){
       if (isDragging) return;
@@ -53,6 +48,7 @@ namespace CakeSort.World{
       if (!closestObject.CompareTag(Keys.Tag.DRAGGABLE)) return;
       if (closestObject.layer != LayerMask.NameToLayer(Keys.Layer.DRAGGABLE)) return;
       if (closestObject.GetComponent<IDrag>() == null) return;
+      if (!closestObject.GetComponent<IDrag>().IsDraggable()) return;
 
       DragUpdate(closestObject).Forget();
     }
@@ -61,9 +57,9 @@ namespace CakeSort.World{
       clickedObject.TryGetComponent<IDrag>(out var dragObject);
 
       isDragging = true;
-      
+
       dragObject?.OnStartDrag();
-      
+
       while (HaveTouchContact()){
         Ray ray = mainCam.ScreenPointToRay(mobileActionMap.CoreLoopMap.Touch.ReadValue<Vector2>());
 

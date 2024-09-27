@@ -98,11 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8068587738b4e16a1bcbae9340eef1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cakeSliceSettings:
-  - {fileID: 11400000, guid: 183d0ca3aeb2c6f42844eec6871e2b68, type: 2}
-  - {fileID: 11400000, guid: f694a870499a0d346856a525024c1beb, type: 2}
-  - {fileID: 11400000, guid: 8ca23757fe9ad264ba21e9f9b66dbaac, type: 2}
-  - {fileID: 11400000, guid: 37babaf82777ee547a0e26f5e4ece24f, type: 2}
   sliceSlotTransformArray:
   - {fileID: 5973773695674559575}
   - {fileID: 7309803552691690268}
@@ -226,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2873300201311744229}
   m_Layer: 8
-  m_Name: Cake Slice Places
+  m_Name: Cake Slice Transforms
   m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

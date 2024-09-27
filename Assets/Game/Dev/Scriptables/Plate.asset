@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Plate
   m_EditorClassIdentifier: 
   prefab: {fileID: 248561779903707348, guid: 58866438a1112d045a90fe5f8f00a550, type: 3}
-  cakeSettings:
+  cakeSliceSettings:
   - {fileID: 11400000, guid: 183d0ca3aeb2c6f42844eec6871e2b68, type: 2}
   - {fileID: 11400000, guid: f694a870499a0d346856a525024c1beb, type: 2}
   - {fileID: 11400000, guid: 8ca23757fe9ad264ba21e9f9b66dbaac, type: 2}

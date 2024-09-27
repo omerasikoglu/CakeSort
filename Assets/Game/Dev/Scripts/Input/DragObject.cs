@@ -1,23 +1,27 @@
-﻿using System;
-using CakeSort.World;
-using UnityEngine;
+﻿using UnityEngine;
+using VContainer;
 
 namespace CakeSort.World{
 
-  [RequireComponent(typeof(Plate))]
+  [RequireComponent(typeof(Plate), typeof(BoxCollider))]
   public class DragObject : MonoBehaviour, IDrag{
     
     Vector3 startMovePos; // counter waiting position
 
-    Plate attachedPlate;
+    BoxCollider boxCollider;
+    GridCell    currentGridCell;
+    Plate       attachedPlate;
+
+    bool isDraggable = true;
 
     void Awake(){
       attachedPlate = GetComponent<Plate>();
+      boxCollider   = GetComponent<BoxCollider>();
       startMovePos  = transform.position;
     }
 
   #region IDrag
-    GridCell currentGridCell;
+    public bool IsDraggable() => isDraggable;
 
     public void OnStartDrag(){
       // play sfx
@@ -27,12 +31,16 @@ namespace CakeSort.World{
       if (currentGridCell == null){ // not inside any grid cell
         transform.position = startMovePos;
       }
-      else{
+      else{ // put it inside the grid cell
         transform.position = currentGridCell.transform.position;
         currentGridCell.AddPlateToCell(attachedPlate);
+        boxCollider.enabled = false;
+        isDraggable         = false;
+        transform.SetParent(currentGridCell.transform);
       }
 
       currentGridCell = null;
+
       // play sfx
     }
 

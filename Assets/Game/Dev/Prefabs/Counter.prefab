@@ -69,7 +69,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: -0.1, z: 0.27}
@@ -83,7 +83,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8891530368082730181}
   m_Layer: 0
-  m_Name: PlatePlace_0
+  m_Name: Plate_0
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3178751085750851075}
   m_Layer: 0
-  m_Name: PlatePlace_2
+  m_Name: Plate_2
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -971,7 +971,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 568
+  m_VersionIndex: 625
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -986,7 +986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2508595105906006585}
   m_Layer: 0
-  m_Name: Plate Places
+  m_Name: PlatesRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1020,7 +1020,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3367321904322415880}
   m_Layer: 0
-  m_Name: PlatePlace_1
+  m_Name: Plate_1
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

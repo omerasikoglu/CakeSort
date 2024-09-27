@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f3f1bec47f4ce6b4f935e548e09206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridCellPrefab: {fileID: 0}
+  gridCellPrefab: {fileID: 1005211084911901297, guid: 0b5f9077d575b1141976eac0e71ce36f,
+    type: 3}
 --- !u!1001 &628174120811561202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,23 +57,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1691839594199988474, guid: 50ec68aebe726d64586414bc05d5ff6d,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1691839594199988474, guid: 50ec68aebe726d64586414bc05d5ff6d,
-        type: 3}
       propertyPath: m_VersionIndex
-      value: 162
+      value: 171
       objectReference: {fileID: 0}
     - target: {fileID: 2050347378479293098, guid: 50ec68aebe726d64586414bc05d5ff6d,
         type: 3}
       propertyPath: m_Name
       value: Floor with Cells
-      objectReference: {fileID: 0}
-    - target: {fileID: 2823382688666005118, guid: 50ec68aebe726d64586414bc05d5ff6d,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5543980728346387569, guid: 50ec68aebe726d64586414bc05d5ff6d,
         type: 3}

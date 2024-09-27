@@ -1,34 +1,26 @@
-﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using VContainer;
 
 namespace CakeSort.World{
 
   public class Counter : MonoBehaviour{
 
-    [SerializeField] Transform[] platePlaceArray;
+    [Inject] GridManager gridManager;
+    
+    [SerializeField] Transform[] plateRootTransformArray;
 
     [SerializeField] PlateSettings plateSettings;
 
-    List<Plate> createdPlateList = new();
-
     public void CreatePlate(int repeatAmount = -1){
-      // repeatAmount = repeatAmount == -1 ? platePlaceArray.Length : repeatAmount;
-
-      for (int i = 0; i < platePlaceArray.Length; i++){
-
-        var parent = platePlaceArray[i].transform;
+      foreach (Transform plateRoot in plateRootTransformArray){
+        var parent = plateRoot.transform;
 
         var plate = plateSettings.Create(parent);
-        plate.transform.position = platePlaceArray[i].position;
+        plate.transform.position = plateRoot.position;
         plate.gameObject.SetActive(true);
 
-        createdPlateList.Add(plate);
+        plate.FillPlateWithSlices();
       }
-
-      // foreach (Plate plate in createdPlateList){
-      //   plate.FillPlateWithSlices(plate.transform);
-      // }
     }
 
   }

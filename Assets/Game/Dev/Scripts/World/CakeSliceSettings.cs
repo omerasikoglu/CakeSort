@@ -15,6 +15,8 @@ namespace CakeSort.World{
     public CakeType     type;
     public GameObject[] CakeSlicePrefabArray;
 
+    public int SliceSlotIndex{get; private set;}
+    
     public CakeSlice Create(int sliceSlotIndex, Transform parent){
 
       GameObject targetPrefab = CakeSlicePrefabArray[sliceSlotIndex];
@@ -24,6 +26,7 @@ namespace CakeSort.World{
       go.name = targetPrefab.name;
 
       CakeSlice cakeSlice = go.AddComponent<CakeSlice>();
+      SliceSlotIndex     = sliceSlotIndex;
       cakeSlice.Settings = this;
 
       return cakeSlice;
